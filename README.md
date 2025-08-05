@@ -1,45 +1,63 @@
 # vue-todo
 
-This template should help get you started developing with Vue 3 in Vite.
+A simple Todo application built with Vue.js.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Add, edit, and delete todo items
+- Mark tasks as complete or incomplete
+- Clean and intuitive user interface
+- Responsive design for desktop and mobile
+- Persist todos in local storage
 
-## Type Support for `.vue` Imports in TS
+## Project Structure
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+The repository is organized as follows:
 
-## Customize configuration
+- `src/` – Source code for the Vue.js application
+  - `components/` – Vue components for the todo list, input form
+  - `App.vue` – Main application component
+  - `main.ts` – Application entry point
+- `public/` – Static assets and the main HTML file
+- `package.json` – Project metadata and dependencies
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Installation
 
-## Project Setup
+1. **Clone the repository:**
 
-```sh
-pnpm install
-```
+   ```bash
+   git clone https://github.com/thaboRach/vue-todo.git
+   cd vue-todo
+   ```
 
-### Compile and Hot-Reload for Development
+2. **Install dependencies:**
 
-```sh
-pnpm dev
-```
+   ```bash
+   pnpm install
+   ```
 
-### Type-Check, Compile and Minify for Production
+3. **Run the development server:**
 
-```sh
-pnpm build
-```
+   ```bash
+   pnpm dev
+   ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+4. Start the JSON server
 
-```sh
-pnpm test:unit
-```
+   ```bash
+   pnpm run server
+   ```
 
-### Lint with [ESLint](https://eslint.org/)
+   (Ensure you have [json-server](https://github.com/typicode/json-server) installed globally or as a dev dependency.)
 
-```sh
-pnpm lint
-```
+## Usage
+
+Once running locally, access the app at `http://localhost:5173` (or the port shown in your terminal).
+
+## Contributing
+
+Contributions are welcome! Please open issues or submit pull requests for any improvements or bug fixes.
+
+## License
+
+This project is open source.
