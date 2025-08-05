@@ -1,0 +1,31 @@
+@import 'primeicons/primeicons.css';
+
+* {
+  font-family: 'Lexend Deca', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  background: #9c79d8;
+  background: linear-gradient(135deg, #9c79d8, #b581d3);
+  width: 100%;
+  min-height: 100vh;
+}
+
+button,
+input[type='submit'],
+input[type='reset'] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+input {
+  all: unset;
+}
