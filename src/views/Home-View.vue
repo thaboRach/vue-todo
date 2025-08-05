@@ -8,10 +8,7 @@ import CustomButton from '@/components/Custom-Button.vue';
     <img :src="HeroIcon" alt="female sitting on the floor with cup in hand and laptop on leg" />
     <section>
       <h1>To-Do List</h1>
-      <p>
-        This productive tool is designed to help you better manage your task project-wise
-        conveniently!
-      </p>
+      <p>This productive tool is designed to help you better manage your tasks conveniently!</p>
 
       <CustomButton to="/todos"> Let's start </CustomButton>
     </section>

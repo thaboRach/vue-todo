@@ -6,7 +6,6 @@ import { useTodosStore } from '@/stores/todos';
 import { computed, onMounted, ref } from 'vue';
 import BackButton from '@/components/Back-Button.vue';
 import { BASE_API_URL } from '@/utils/constants';
-// @ts-expect-error types not correct
 import { useToast } from 'vue-toastification';
 import axios from 'axios';
 

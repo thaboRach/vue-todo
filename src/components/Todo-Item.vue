@@ -4,12 +4,14 @@ import ActionButton from './Action-Button.vue';
 import { useTodosStore } from '@/stores/todos';
 import type { Todo } from '@/types/todo';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 import { BASE_API_URL } from '@/utils/constants';
 
 const props = defineProps<{ todo: Todo }>();
 
 const todoStore = useTodosStore();
 const router = useRouter();
+const toast = useToast();
 
 const deleteTodo = async () => {
   const confirm = window.confirm('Are you sure you want to delete this?');
@@ -23,6 +25,7 @@ const deleteTodo = async () => {
     }
   } catch (error) {
     console.error('Error deleting item', error);
+    toast.error('Could not delete todo');
   }
 };
 
@@ -42,6 +45,7 @@ const onTodoDone = async () => {
     }
   } catch (error) {
     console.error('Error marking item as done', error);
+    toast.error('Could not edit todo');
   }
 };
 </script>
