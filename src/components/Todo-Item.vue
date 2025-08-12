@@ -1,53 +1,16 @@
 <script setup lang="ts">
-import axios from 'axios';
 import ActionButton from './Action-Button.vue';
-import { useTodosStore } from '@/stores/todos';
 import type { Todo } from '@/types/todo';
-import { useRouter } from 'vue-router';
-import { useToast } from 'vue-toastification';
-import { BASE_API_URL } from '@/utils/constants';
 
-const props = defineProps<{ todo: Todo }>();
+defineProps<{
+  todo: Todo;
+}>();
 
-const todoStore = useTodosStore();
-const router = useRouter();
-const toast = useToast();
-
-const deleteTodo = async () => {
-  const confirm = window.confirm('Are you sure you want to delete this?');
-
-  try {
-    if (confirm) {
-      const response = await axios.delete(`${BASE_API_URL}/todos/${props.todo.id}`);
-      if (response.data) {
-        todoStore.deleteTodo(props.todo.id);
-      }
-    }
-  } catch (error) {
-    console.error('Error deleting item', error);
-    toast.error('Could not delete todo');
-  }
-};
-
-const onEditTodo = () => {
-  router.push(`/todo/edit/${props.todo.id}`);
-};
-
-const onTodoDone = async () => {
-  try {
-    const response = await axios.put(`${BASE_API_URL}/todos/${props.todo.id}`, {
-      ...props.todo,
-      done: !props.todo.done,
-    });
-
-    if (response.data) {
-      todoStore.markAsDone(props.todo.id);
-    }
-  } catch (error) {
-    console.error('Error marking item as done', error);
-    toast.error('Could not edit todo');
-  }
-};
+defineEmits<{
+  (event: 'delete'): void;
+  (event: 'edit'): void;
+  (event: 'done'): void;
+}>();
 </script>
 
 <template>
@@ -55,19 +18,19 @@ const onTodoDone = async () => {
     <p :class="`${todo.done ? 'done' : ''}`">{{ todo.text }}</p>
 
     <div v-if="todo.done">
-      <ActionButton action="EDIT" v-on:click="onTodoDone">
+      <ActionButton action="EDIT" @click="$emit('done')">
         <i class="pi pi-undo"></i>
       </ActionButton>
     </div>
 
     <div v-else>
-      <ActionButton action="DONE" v-on:click="onTodoDone">
+      <ActionButton action="DONE" @click="$emit('done')">
         <i class="pi pi-check"></i>
       </ActionButton>
-      <ActionButton action="EDIT" v-on:click="onEditTodo">
+      <ActionButton action="EDIT" @click="$emit('edit')">
         <i class="pi pi-pen-to-square"></i>
       </ActionButton>
-      <ActionButton action="DELETE" v-on:click="deleteTodo">
+      <ActionButton action="DELETE" @click="$emit('delete')">
         <i class="pi pi-trash"></i>
       </ActionButton>
     </div>

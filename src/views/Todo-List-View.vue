@@ -1,17 +1,21 @@
 <script lang="ts" setup>
-import TodoItem from '@/components/Todo-Item.vue';
+import { computed, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 // @ts-expect-error package does not have types
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+import TodoItem from '@/components/Todo-Item.vue';
+
 import { useTodosStore } from '@/stores/todos';
-import { computed, onMounted, ref } from 'vue';
 import BackButton from '@/components/Back-Button.vue';
 import { BASE_API_URL } from '@/utils/constants';
 import { useToast } from 'vue-toastification';
 import axios from 'axios';
+import type { Todo } from '@/types/todo';
 
 const todoStore = useTodosStore();
 const isLoading = ref(true);
 const toast = useToast();
+const router = useRouter();
 
 const todosDone = computed(() => {
   return (todoStore.list ?? []).filter((item) => item.done);
@@ -32,6 +36,42 @@ const onClearDone = async () => {
     }
   } catch (error) {
     console.error('Error deleting item', error);
+  }
+};
+
+const onDeleteTodo = async (id: string) => {
+  const confirm = window.confirm('Are you sure you want to delete this?');
+
+  try {
+    if (confirm) {
+      const response = await axios.delete(`${BASE_API_URL}/todos/${id}`);
+      if (response.data) {
+        todoStore.deleteTodo(id);
+      }
+    }
+  } catch (error) {
+    console.error('Error deleting item', error);
+    toast.error('Could not delete todo');
+  }
+};
+
+const onEditTodo = (id: string) => {
+  router.push(`/todo/edit/${id}`);
+};
+
+const onTodoDone = async (todo: Todo) => {
+  try {
+    const response = await axios.put(`${BASE_API_URL}/todos/${todo.id}`, {
+      ...todo,
+      done: !todo.done,
+    });
+
+    if (response.data) {
+      todoStore.markAsDone(todo.id);
+    }
+  } catch (error) {
+    console.error('Error marking item as done', error);
+    toast.error('Could not edit todo');
   }
 };
 
@@ -57,7 +97,14 @@ onMounted(async () => {
       <PulseLoader />
     </div>
     <ul v-else-if="!isLoading && todoStore.list.length > 0">
-      <TodoItem v-for="todo in todoStore.list" :key="todo.id" :todo="todo" />
+      <TodoItem
+        v-for="todo in todoStore.list"
+        :key="todo.id"
+        :todo="todo"
+        @delete="() => onDeleteTodo(todo.id)"
+        @edit="() => onEditTodo(todo.id)"
+        @done="() => onTodoDone(todo)"
+      />
     </ul>
 
     <p v-else>Nothing in list.</p>

@@ -3,7 +3,6 @@ import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTodosStore } from '@/stores/todos';
 import CustomButton from '@/components/Custom-Button.vue';
-// @ts-expect-error types not correct
 import { useToast } from 'vue-toastification';
 import axios from 'axios';
 
